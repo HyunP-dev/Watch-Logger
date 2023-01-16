@@ -1,14 +1,12 @@
 package kr.ac.hallym.watchlogger
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -61,7 +59,7 @@ class MainActivity :
                     Log.d("save", file.toString())
                     file.appendText("time,bpm\n")
 
-                    val hz = 120
+                    val hz = 30
                     while (true) {
                         try {
                             val line = "${System.currentTimeMillis()},$bpm\n"
