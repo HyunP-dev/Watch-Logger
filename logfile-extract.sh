@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "Watch Logger - File Extractor"
 echo "================================================"
 adb devices
