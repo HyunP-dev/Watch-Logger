@@ -1,0 +1,83 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+
+\usepackage[top=20mm, bottom=20mm, left=20mm, right=20mm, a4paper]{geometry}
+\usepackage{amsmath}
+\usepackage{kotex}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage[lighttt]{lmodern}
+\usepackage{minted}
+\usepackage{fontspec}
+
+
+\usepackage{sourcecodepro}
+\setmonofont[Scale=MatchLowercase]{JetBrains Mono}
+
+\setmainhangulfont{NanumMyeongjo}
+\setmainfont{Latin Modern Math}
+
+\setmainfont{NanumMyeongjo}
+\definecolor{GrayCodeBlock}{RGB}{241,241,241} 
+
+
+\title{Wear OS를 이용한 심박수 측정 실험 보고서}
+\author{20205178 박현}
+\date{}
+
+\renewcommand{\thesection}{\arabic{section}.\hspace{-10pt}}
+\renewcommand{\thesubsection}{\arabic{section}. \arabic{subsection}.\hspace{-7pt}}
+\usemintedstyle{manni}
+\setminted{fontsize=\small, baselinestretch=1, bgcolor=GrayCodeBlock}
+\definecolor{bg}{HTML}{282828}
+
+% Document
+\begin{document}
+    \maketitle
+    \setstretch{1.25}
+    \section{실험 목적}
+    본 실험은 시중에 쉽게 구할 수 있는 웨어러블 장치를 이용해 
+    여러 명의 피실험자를 대상으로 심박수를 측정하여 이를 분석할 수 있는 
+    환경을 구현해낼 수 있는가에 대한 것으로 크게 심박수를 측정하는 부분과
+    측정된 데이터를 분석할 수 있도록 파일을 제공하는 부분으로 나뉜다. 
+    
+    \section{실험 방법}
+    \subsection*{개발 과정}
+    \hspace{0cm}
+    \setstretch{0.0}
+    \begin{description}
+        \item[\hspace{0.5cm}기초적인 심박수 측정] SensorManager를 이용해 구현.
+        \item[\hspace{0.5cm}권한 문제 해결] requestPermissions를 이용해 사용자 편의 향상.
+        \item[\hspace{0.5cm}백그라운드 전환 시 중단 문제 해결] AmbientMode를 이용해 해결.
+        \item[\hspace{0.5cm}파일 쓰기 문제 해결] 컨텍스트 객체의 filesDir 속성을 이용해 해결.
+        \item[\hspace{0.5cm}외부에서 파일 접근 문제 해결] adb를 이용해 가져오는 것으로 해결.
+        \item[\hspace{0.5cm}FTP 서버에 파일 전송] ftp4j 라이브러리를 이용해 구현.
+    \end{description}
+    \setstretch{1.25}
+    \subsection*{실험 기구}
+    \hspace{0cm}
+    \setstretch{0.0}
+    \begin{itemize}
+        \item Samsung Galaxy A8 (SM-A530N) [ Android: 9 ]
+        \item Samsung Galaxy Watch4 (SM-R860) [ System: 11, Wear OS: 3.5 ]
+        \item TICKR FIT heart rate armband (WFBTHR03)
+    \end{itemize}
+    \setstretch{1.25}
+    \subsection*{실험 절차}
+    \hspace{0cm}
+    \setstretch{0.0}
+    \begin{enumerate}
+        \item 개발한 어플리케이션을 ADB를 이용해 Galaxy Watch4에 설치한다.
+        \item Galaxy A8에서 위의 설치한 어플리케이션에 걸려 있는 백그라운드 제한을 해제한다.
+        \item 기기들을 이용해 동시에 심박수를 측정한 후 FTP 서버에 측정된 결과 파일을 전송한다.
+        \item FTP 서버에 저장된 파일을 읽어 파일 간 차이에 대해 분석해 유효성을 판단한다.
+        \item[] \hspace{0.5cm}(이 때, 밴드의 경우 FTP 기능을 구현하지 않아 로깅에 사용된 휴대폰에서 파일을 가져온다.) 
+    \end{enumerate}
+    \setstretch{1.25}
+
+\end{document}
