@@ -71,13 +71,12 @@ class MainActivity :
         }
 
         val idFile = File(filesDir.path, "id.txt")
-        var idCode = ""
-        if (idFile.exists()) {
-            idCode = idFile.readText()
-        } else {
+        var idCode = if (idFile.exists()) idFile.readText() else ""
+        if (idCode == "" || idCode.length != 4) {
             idCode = (abs(Random.nextInt()) % 10000).toString()
-            idFile.appendText(idCode)
+            idFile.writeText(idCode)
         }
+
         binding.idView.text = "id: $idCode"
 
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
