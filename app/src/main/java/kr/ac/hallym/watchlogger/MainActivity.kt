@@ -122,12 +122,10 @@ class MainActivity :
                 saveThread.interrupt()
                 Thread {
                     val ftpClient = FTPClient()
-                    Thread {
-                        ftpClient.connect("senunas.ipdisk.co.kr", 2348)
-                        ftpClient.login("pakhyun", "parkhyun")
-                        ftpClient.type = FTPClient.TYPE_BINARY
-                        ftpClient.changeDirectory("/HDD1/pak_hyun/")
-                    }.start()
+                    ftpClient.connect("senunas.ipdisk.co.kr", 2348)
+                    ftpClient.login("pakhyun", "parkhyun")
+                    ftpClient.type = FTPClient.TYPE_BINARY
+                    ftpClient.changeDirectory("/HDD1/pak_hyun/")
                     ftpClient.upload(file, object : FTPDataTransferListener {
                         override fun started() {}
 
