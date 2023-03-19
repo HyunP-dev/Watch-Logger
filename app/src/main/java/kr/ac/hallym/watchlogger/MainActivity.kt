@@ -19,6 +19,7 @@ import kr.ac.hallym.watchlogger.databinding.ActivityMainBinding
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.math.abs
 import kotlin.random.Random
 
 
@@ -74,7 +75,7 @@ class MainActivity :
         if (idFile.exists()) {
             idCode = idFile.readText()
         } else {
-            idCode = Random.nextInt().toString()
+            idCode = (abs(Random.nextInt()) % 10000).toString()
             idFile.appendText(idCode)
         }
         binding.idView.text = "id: $idCode"
