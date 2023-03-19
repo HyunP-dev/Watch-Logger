@@ -63,27 +63,27 @@
                     <!--                        android:text="  "/>-->
                 </LinearLayout>
 
-                <Space
-                    android:layout_width="8dp"
-                    android:layout_height="wrap_content" />
+<!--                <Space-->
+<!--                    android:layout_width="8dp"-->
+<!--                    android:layout_height="wrap_content" />-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center"-->
+<!--                    android:orientation="vertical">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Send"
-                        android:textSize="10dp" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Send"-->
+<!--                        android:textSize="10dp" />-->
 
-                    <Button
-                        android:id="@+id/sendbtn"
-                        android:layout_width="50dp"
-                        android:layout_height="27dp" />
-                </LinearLayout>
+<!--                    <Button-->
+<!--                        android:id="@+id/sendbtn"-->
+<!--                        android:layout_width="50dp"-->
+<!--                        android:layout_height="27dp" />-->
+<!--                </LinearLayout>-->
             </LinearLayout>
 
             <TextView

@@ -120,45 +120,47 @@ class MainActivity :
                 saveThread.start()
             } else {
                 saveThread.interrupt()
-                binding.sendbtn.isEnabled = true
+                Thread {
+                    val ftpClient = FTPClient()
+                    Thread {
+                        ftpClient.connect("senunas.ipdisk.co.kr", 2348)
+                        ftpClient.login("pakhyun", "parkhyun")
+                        ftpClient.type = FTPClient.TYPE_BINARY
+                        ftpClient.changeDirectory("/HDD1/pak_hyun/")
+                    }.start()
+                    ftpClient.upload(file, object : FTPDataTransferListener {
+                        override fun started() {}
+
+                        override fun transferred(length: Int) {}
+
+                        override fun completed() {
+                            runOnUiThread {
+                                Toast.makeText(applicationContext, "Send completed", Toast.LENGTH_SHORT)
+                                    .show()
+                                binding.sendbtn.isEnabled = false
+                            }
+
+                        }
+
+                        override fun aborted() {}
+
+                        override fun failed() {
+                            runOnUiThread {
+                                Toast.makeText(applicationContext, "Send failed", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+                    })
+                }.start()
+
+//                binding.sendbtn.isEnabled = true
             }
         }
 
-        val ftpClient = FTPClient()
-        Thread {
-            ftpClient.connect()
-            ftpClient.login()
-            ftpClient.type = FTPClient.TYPE_BINARY
-            ftpClient.changeDirectory()
-        }.start()
-        binding.sendbtn.isEnabled = false
-        binding.sendbtn.setOnClickListener {
-            Thread {
-                ftpClient.upload(file, object : FTPDataTransferListener {
-                    override fun started() {}
-
-                    override fun transferred(length: Int) {}
-
-                    override fun completed() {
-                        runOnUiThread {
-                            Toast.makeText(applicationContext, "Send completed", Toast.LENGTH_SHORT)
-                                .show()
-                            binding.sendbtn.isEnabled = false
-                        }
-
-                    }
-
-                    override fun aborted() {}
-
-                    override fun failed() {
-                        runOnUiThread {
-                            Toast.makeText(applicationContext, "Send failed", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    }
-                })
-            }.start()
-        }
+//        binding.sendbtn.isEnabled = false
+//        binding.sendbtn.setOnClickListener {
+//
+//        }
     }
 
     override fun getAmbientCallback(): AmbientModeSupport.AmbientCallback = MyAmbientCallback()
