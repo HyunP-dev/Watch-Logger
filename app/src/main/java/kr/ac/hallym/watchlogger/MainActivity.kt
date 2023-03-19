@@ -137,7 +137,7 @@ class MainActivity :
                             runOnUiThread {
                                 Toast.makeText(applicationContext, "Send completed", Toast.LENGTH_SHORT)
                                     .show()
-                                binding.sendbtn.isEnabled = false
+//                                binding.sendbtn.isEnabled = false
                             }
 
                         }
