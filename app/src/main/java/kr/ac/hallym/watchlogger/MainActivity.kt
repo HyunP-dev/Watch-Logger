@@ -36,7 +36,8 @@ class MainActivity :
     private lateinit var accSensor: Sensor
     private lateinit var gyroSensor: Sensor
 
-    private lateinit var file: File
+    private lateinit var bpmFile: File
+    private lateinit var agsFile: File
 
     var accValues: FloatArray = FloatArray(3)
     var gyroValues: FloatArray = FloatArray(3)
@@ -95,21 +96,20 @@ class MainActivity :
             if (state) {
                 saveThread = Thread {
                     val logTime = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
-                    file = File(
-                        filesDir.path,
-                         "${idCode}_${logTime}.csv"
-                    )
-                    Log.d("save", file.toString())
-                    file.appendText("id,time,bpm,ax,ay,az,gx,gy,gz\n")
+                    bpmFile = File(filesDir.path, "${idCode}_bpm_${logTime}.csv")
+                    agsFile = File(filesDir.path, "${idCode}_ags_${logTime}.csv")
 
+                    Log.d("save", bpmFile.toString())
+                    bpmFile.appendText("time,bpm\n")
+                    agsFile.appendText("time,ax,ay,az,gx,gy,gz\n")
                     val hz = 20
                     while (true) {
                         try {
                             val acc = accValues.joinToString(",")
                             val gyro = gyroValues.joinToString(",")
-                            val line = "$idCode,${System.currentTimeMillis()},$bpm,$acc,$gyro\n"
-                            Log.d("save", line)
-                            file.appendText(line)
+                            val time = System.currentTimeMillis()
+                            bpmFile.appendText("$time,$bpm\n")
+                            agsFile.appendText("$time,$acc,$gyro\n")
 
                             Thread.sleep((1000 / hz).toLong())
                         } catch (_: InterruptedException) {
@@ -126,7 +126,7 @@ class MainActivity :
                     ftpClient.login("pakhyun", "parkhyun")
                     ftpClient.type = FTPClient.TYPE_BINARY
                     ftpClient.changeDirectory("/HDD1/pak_hyun/")
-                    ftpClient.upload(file, object : FTPDataTransferListener {
+                    val ftpTListener = object : FTPDataTransferListener {
                         override fun started() {}
 
                         override fun transferred(length: Int) {}
@@ -148,7 +148,9 @@ class MainActivity :
                                     .show()
                             }
                         }
-                    })
+                    }
+                    ftpClient.upload(bpmFile, ftpTListener)
+                    ftpClient.upload(agsFile, ftpTListener)
                 }.start()
 
 //                binding.sendbtn.isEnabled = true
